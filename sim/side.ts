@@ -626,6 +626,11 @@ export class Side {
 					return this.emitChoiceError(`Can't move: ${pokemon.name} can't Dynamax now.`);
 				} else if (pokemon.side.allySide?.canDynamaxNow()) {
 					return this.emitChoiceError(`Can't move: It's your partner's turn to Dynamax.`);
+				} else if (
+					pokemon.species.isMega || pokemon.species.isPrimal || pokemon.species.forme === "Ultra" ||
+					pokemon.getItem().zMove || pokemon.canMegaEvo || pokemon.terastallized
+				) {
+					return this.emitChoiceError(`Can't move: Pokémon locked in to Battle Gimmick already.`)
 				}
 				return this.emitChoiceError(`Can't move: You can only Dynamax once per battle.`);
 			}

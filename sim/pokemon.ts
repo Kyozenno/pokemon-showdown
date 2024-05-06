@@ -238,6 +238,8 @@ export class Pokemon {
 	activeMoveActions: number;
 	previouslySwitchedIn: number;
 	truantTurn: boolean;
+	// Flag to prevent Dynamax users from Terastallizing, Mega Evolving, or using a Z-Move after Dynamax expires
+	dynamaxUsed: boolean;
 	// Gen 9 only
 	swordBoost: boolean;
 	shieldBoost: boolean;
@@ -453,6 +455,7 @@ export class Pokemon {
 		this.activeMoveActions = 0;
 		this.previouslySwitchedIn = 0;
 		this.truantTurn = false;
+		this.dynamaxUsed = false;
 		this.swordBoost = false;
 		this.shieldBoost = false;
 		this.syrupTriggered = false;
@@ -1002,7 +1005,7 @@ export class Pokemon {
 			if (!this.side.canDynamaxNow()) return;
 			if (
 				this.species.isMega || this.species.isPrimal || this.species.forme === "Ultra" ||
-				this.getItem().zMove || this.canMegaEvo
+				this.getItem().zMove || this.canMegaEvo || this.terastallized
 			) {
 				return;
 			}
